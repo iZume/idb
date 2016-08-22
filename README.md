@@ -66,3 +66,45 @@ idb_all(values[2][MAX_PLAYER_NAME], "SELECT `name`, `points` FROM `users` WHERE 
     printf("%s has %s points", values[0], values[1]);
 }
 ```
+
+### idb_all_with_fields(values[][], query[])
+
+Query the database and loop through all results. Gets column/field names too, so data can be accessed via the column names
+
+Example:
+```
+idb_all_with_fields(values[3][32], "SELECT * FROM `table`;") {
+    new foo[256];
+    idb_str(values, "foo", foo);
+    printf("id: %d, foo: %s", idb_int(values, "id"), foo);
+}
+```
+
+### idb_str(values[][], field[], value[])
+
+Get a string value from a database query by the column/field name (can only be used inside a `idb_all_with_fields` block)
+
+### idb_int(values[][], field[])
+
+As above but for an integer
+
+For idb_int and idb_str examples see above
+
+### idb_insert(table[], values[][][], num_fields = sizeof values)
+
+Insert a row into a table.
+
+Returns the id of the row, or -1 if it failed
+
+Example:
+```
+new values[][][] = {
+    { "foo", "foobar" },
+    { "bar", "70" }
+};
+printf("id: %d", idb_insert("table", values));
+```
+
+## Contributing
+
+Feel free to send a pull request with your changes
